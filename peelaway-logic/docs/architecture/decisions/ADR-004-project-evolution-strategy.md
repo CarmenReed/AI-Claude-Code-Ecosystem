@@ -50,7 +50,7 @@ The choice of Claude Code over Gemini Code Assist or other tools was based on th
 ## Consequences
 
 **Positive:**
-- Rebuilt with comprehensive test coverage from the first sprint (now 453 unit/component tests + 62 E2E tests), covering every layer and phase
+- Rebuilt with comprehensive test coverage from the first sprint (now 434 unit/component tests + 62 E2E tests), covering every layer and phase
 - Data contracts between phases eliminate the copy-paste and format ambiguity of the Gem model
 - Claude Code's CLAUDE.md architecture means every development session starts with full project context, not a cold start
 - The project can be documented, tested, and maintained like production software, not like a collection of prompts

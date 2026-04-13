@@ -5,7 +5,7 @@
 **Live Site:** https://carmenreed.github.io/PeelAway-Logic  
 **Stack:** React (Create React App), Anthropic Claude API, Azure AI Search, Microsoft Playwright, Semantic Kernel (Python demo)  
 **Dev Tools:** Claude Code (implementation), GitHub Copilot (inline questions), Claude Cowork (planning)  
-**Test Coverage:** 453 unit/component tests across 16 suites (Jest + RTL), 62 E2E tests across 7 specs (Microsoft Playwright), CI/CD via GitHub Actions
+**Test Coverage:** 434 unit/component tests across 17 suites (Jest + RTL), 62 E2E tests across 8 specs (Microsoft Playwright), CI/CD via GitHub Actions
 
 ---
 
@@ -95,8 +95,8 @@ See [azure-resources.bicep](./docs/architecture/azure-resources.bicep) for the f
 
 | Metric | Value |
 |---|---|
-| Unit/component tests | 453 tests across 16 suites (Jest + React Testing Library) |
-| E2E tests | 62 tests across 7 specs (Microsoft Playwright + Chromium) |
+| Unit/component tests | 434 tests across 17 suites (Jest + React Testing Library) |
+| E2E tests | 434 tests across 8 specs (Microsoft Playwright + Chromium) |
 | Anti-hallucination rate | 0% fabrication on resume tailoring (architecturally enforced) |
 | Search performance | ~30 max results per session, ~45 second scoring time |
 | API cost per session | ~$0.60 to $0.90 after layer caps (down from ~$1.00 to $1.55) |

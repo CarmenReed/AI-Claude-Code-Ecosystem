@@ -154,8 +154,8 @@ timeline
               : Structured output contracts between phases
               : localStorage persistence with dedup
     section March 2026
-        Growth : 453 unit/component tests across 16 suites (Jest + RTL)
-               : 62 E2E tests across 7 specs (Microsoft Playwright + Chromium)
+        Growth : 434 unit/component tests across 17 suites (Jest + RTL)
+               : 62 E2E tests across 8 specs (Microsoft Playwright + Chromium)
                : CI/CD via GitHub Actions (4 workflows)
                : Anti-hallucination tests as first-class coverage
                : Doc-lint and env-audit quality enforcement
