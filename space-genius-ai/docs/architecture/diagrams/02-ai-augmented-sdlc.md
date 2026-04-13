@@ -1,6 +1,6 @@
 # Diagram 02: AI-Augmented SDLC Flow
 
-**Purpose:** Shows how AI transforms each phase of the SpaceGenius software delivery lifecycle, from meeting to deployed feature. This is the value story for Elias's System Thinking assessment: the same engineering discipline applied at enterprise scale.
+**Purpose:** Shows how AI transforms each phase of the SpaceGenius software delivery lifecycle, from meeting to deployed feature. This is the value story for System Thinking assessment: the same engineering discipline applied at enterprise scale.
 
 ---
 

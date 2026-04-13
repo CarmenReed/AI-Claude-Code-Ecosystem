@@ -32,7 +32,7 @@ The Semantic Kernel demo uses a kernel abstraction layer. The model provider is 
 
 | Option | Pros | Cons |
 |---|---|---|
-| Azure OpenAI | Microsoft tenant data residency, Managed Identity auth, Foundry eval tooling, production-standard for Microsoft interviews | Requires subscription approval, no free tier, approval not available during sprint window |
+| Azure OpenAI | Microsoft tenant data residency, Managed Identity auth, Foundry eval tooling, production-standard for enterprise environments | Requires subscription approval, no free tier, approval not available during sprint window |
 | OpenAI (GPT-4o direct) | High quality, well-documented, instant access | Third-party egress, no Microsoft story, same cost structure as Claude without the SK demo alignment |
 | Gemini API | Free tier, fast, prior familiarity | Disconnected Gem model was the pain point this project was built to solve; no SK alignment; weaker function calling than Claude |
 | Local model (Ollama) | Zero cost, no egress | Cannot run on GitHub Pages; requires server infrastructure; quality insufficient for resume tailoring |

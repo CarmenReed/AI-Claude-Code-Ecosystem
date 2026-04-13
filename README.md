@@ -1,7 +1,5 @@
 # AI Architecture Portfolio: Carmen Reed
 
-**Role Target:** Principal Software Engineer, AI Focus | Microsoft  
-**Interview:** April 15, 2026  
 **Author:** Carmen Reed, Solutions Architect, decades of enterprise delivery
 
 ---
@@ -69,17 +67,8 @@ AI-Claude-Code-Ecosystem/
 ## Technology Stack
 
 ### PeelAway Logic
-React (Create React App), Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), GitHub Pages, Jest (453 tests, 16 suites), Microsoft Playwright (62 E2E tests), GitHub Actions CI/CD, GitHub Copilot, Claude Code
+React (Create React App), Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), Azure Bicep (IaC template), GitHub Pages, Jest (453 tests, 16 suites), Microsoft Playwright (62 E2E tests), GitHub Actions CI/CD, GitHub Copilot, Claude Code
 
 ### SpaceGenius (Production)
-C# / .NET, ASP.NET Web API, React, SQL Server / SQL Managed Instance, Azure Functions, Azure App Services, Azure Service Bus, Azure Key Vault, Managed Identity, Azure DevOps Pipelines, ARM templates
+C# / .NET, ASP.NET Web API, React, SQL Server / SQL Managed Instance, Azure Functions, Azure App Services, Azure Service Bus, Azure Key Vault, Managed Identity, Azure DevOps Pipelines, Azure CI/CD, ARM templates, Claude Code, GitHub Copilot
 
----
-
-## Elias Interview Mapping
-
-| Elias Assessment Area | Evidence Location |
-|---|---|
-| Architectural Design Decisions: "explain why or why not" | All ADRs, each with Alternatives Considered and Azure Migration Path |
-| System Thinking: systems-level reasoning, coaching ability | ARCHITECTURE.md diagrams, PROJECT_EVOLUTION.md, AI_TRANSFORMATION_ROADMAP.md |
-| AI Experience: hands-on, production use | PROJECT_EVOLUTION.md sections 4-6, SpaceGenius SOLUTION_ARCHITECTURE.md, ADR-006 |

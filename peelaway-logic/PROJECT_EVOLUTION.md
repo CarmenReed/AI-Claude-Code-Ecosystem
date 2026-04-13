@@ -89,7 +89,7 @@ Two Azure integrations were added to demonstrate Microsoft AI platform fluency a
 
 One of the most architecturally interesting aspects of this project is that it was built using the same agentic, iterative AI-assisted approach that it demonstrates.
 
-The sprint plan for this Azure integration phase was itself audited by Claude Code agents. The agent reviewed the plan for gaps (missing IaC awareness artifact, no ADR for anti-hallucination), added phases that would directly address interview assessment criteria, and produced the talking-point mapping to Elias's three assessment areas. The output of that recursive refinement is the MASTER_PLAN_AZURE_SPRINT.md document in the QA repository.
+The sprint plan for this Azure integration phase was itself audited by Claude Code agents. The agent reviewed the plan for gaps (missing IaC awareness artifact, no ADR for anti-hallucination), added phases that would directly address architectural assessment criteria, and produced a talking-point mapping to the three core assessment areas. The output of that recursive refinement is the MASTER_PLAN_AZURE_SPRINT.md document in the QA repository.
 
 This is the practical argument for agentic AI in architecture work: the AI is not a code generator. It is a planning partner that can reason about the completeness of an architecture document the same way it reasons about the completeness of a codebase.
 
