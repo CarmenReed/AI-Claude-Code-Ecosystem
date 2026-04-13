@@ -1,0 +1,30 @@
+%% Azure Integration Architecture
+%% Shows how Azure AI Search and the Semantic Kernel demo fit into the system
+%% Left side: current F0 free tier implementation with REST client
+%% Right side: enterprise migration target with SDK and Managed Identity
+
+graph LR
+    subgraph PeelAway_Current["PeelAway Logic (Current)"]
+        AzureClient["azureSearchService.js\nREST client pattern\nFetch + JSON, no SDK"]
+        SKDemo["Semantic Kernel Demo\nPython, standalone\nPlugins: Scout, Score, Tailor"]
+    end
+
+    subgraph Azure_Current["Azure (F0 Free Tier)"]
+        SearchIndex["Azure AI Search\npeelaway-search\nIndex: resumes + job descriptions"]
+    end
+
+    subgraph Azure_Enterprise["Enterprise Migration Target"]
+        SearchSDK["Azure AI Search SDK\n@azure/search-documents\nDefaultAzureCredential"]
+        AOAI["Azure OpenAI\nGPT-4o deployment\nReplaces Claude API"]
+        SKProd["Semantic Kernel Production\nPlugins as Azure Functions\nManaged Identity auth"]
+        StaticWebApp["Azure Static Web Apps\nReplaces GitHub Pages\nStaging slots, custom domain"]
+        CosmosDB["Azure Cosmos DB\nReplaces localStorage\nMulti-device sync"]
+    end
+
+    AzureClient -->|"GET /indexes/jobs/docs/search"| SearchIndex
+    SKDemo -->|"claude-3-5-sonnet (swap-ready)"| ClaudeAPI["Anthropic Claude API"]
+
+    AzureClient -.->|"Enterprise migration"| SearchSDK
+    SKDemo -.->|"Swap 2 config lines"| AOAI
+    SearchSDK --> SearchIndex
+    AOAI --> SKProd

@@ -1,0 +1,24 @@
+%% Pipeline Data Flow
+%% Data contracts between phases: what goes in, what comes out, where human gates sit
+%% Human gates are first-class nodes, not just transitions
+
+flowchart TD
+    A["Scout Phase\nInput: role title, location, seniority, keywords\nOutput: SearchConfig object"]
+
+    Gate1{{"Human Gate: Review and confirm search configuration"}}
+
+    B["Search Phase\nInput: SearchConfig\nProcess: Layer 1 + 2 + 3, dedup, cap at 10 per layer\nOutput: RawJob array, max ~30 items"]
+
+    Gate2{{"Human Gate: Review search results summary"}}
+
+    C["Review Phase\nInput: RawJob array\nProcess: batch score via Haiku, promote top 5\nFetch full JDs, re-score via Sonnet\nOutput: ScoredJob array with rationale and rank"]
+
+    Gate3{{"Human Gate: User selects jobs to tailor, dismisses others"}}
+
+    D["Tailor Phase\nInput: Selected ScoredJob + resume PDF\nProcess: ground tailoring prompt in resume content only\nOutput: TailoredResume object, no invented content"]
+
+    Gate4{{"Human Gate: User reviews and approves tailored content"}}
+
+    E["Complete Phase\nInput: Approved TailoredResume + ScoredJob\nProcess: save to localStorage, mark as applied\nOutput: persistent application record"]
+
+    A --> Gate1 --> B --> Gate2 --> C --> Gate3 --> D --> Gate4 --> E

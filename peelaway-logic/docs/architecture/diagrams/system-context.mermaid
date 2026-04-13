@@ -1,0 +1,35 @@
+%% C4 Level 1: System Context
+%% PeelAway Logic in its ecosystem
+%% Shows the user, all external systems, and where AI services connect
+
+graph TB
+    User["Job Seeker\n(Carmen Reed)"]
+
+    subgraph External_APIs["External Job Sources"]
+        Adzuna["Adzuna API\nJob listing aggregator"]
+        JSearch["JSearch API\nReal-time job boards"]
+        RSS["RSS Feeds\n7 employer and job board feeds"]
+        ATS["ATS Direct Search\nCompany careers pages via web"]
+    end
+
+    subgraph AI_Services["AI Services"]
+        Claude["Anthropic Claude API\nHaiku: batch scoring\nSonnet: full JD analysis and tailoring"]
+        AzureSearch["Azure AI Search\nF0 free tier\nSemantic resume and JD similarity"]
+    end
+
+    subgraph Hosting["Hosting and CI/CD"]
+        GHPages["GitHub Pages\nStatic React application"]
+        GHActions["GitHub Actions\nCI/CD: test, lint, deploy"]
+    end
+
+    PeelAway["PeelAway Logic\nMulti-phase agentic\njob search pipeline"]
+
+    User -->|"Searches, scores, reviews, tailors"| PeelAway
+    PeelAway -->|"Fetch job listings"| Adzuna
+    PeelAway -->|"Fetch job listings"| JSearch
+    PeelAway -->|"Parse feeds"| RSS
+    PeelAway -->|"Prompt for company-direct listings"| ATS
+    PeelAway -->|"Scoring and tailoring prompts"| Claude
+    PeelAway -->|"Semantic search queries"| AzureSearch
+    PeelAway -.->|"Deployed to"| GHPages
+    GHActions -.->|"Builds and deploys"| GHPages

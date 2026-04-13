@@ -1,0 +1,32 @@
+%% C4 Level 2: Container Diagram
+%% Internal structure of PeelAway Logic
+%% Shows what runs where, what stores what, and how the parts communicate
+
+graph TB
+    subgraph Browser["Browser (React SPA)"]
+        Scout["Scout Phase\nRole criteria input\nSearch configuration builder"]
+        Search["Search Phase\nLayer 1: Adzuna + JSearch\nLayer 2: RSS feeds\nLayer 3: ATS web search\nDedup and merge"]
+        Review["Review Phase\nBatch scoring via Claude Haiku\nFull JD fetch for top 5\nRe-score via Claude Sonnet"]
+        Tailor["Tailor Phase\nResume PDF upload\nGrounded tailoring via Claude Sonnet\nAnti-hallucination constraints"]
+        Complete["Complete Phase\nApplication record saved\nApplied/dismissed tracking"]
+        Storage["localStorage\nasp-applied-jobs\njsp-dismissed-jobs\nSearch configuration cache"]
+        AzureSearchClient["azureSearchService.js\nREST client for Azure AI Search\nNo SDK dependency"]
+    end
+
+    subgraph External["External Services"]
+        ClaudeAPI["Anthropic Claude API"]
+        AzureSearchService["Azure AI Search\nF0 free tier"]
+        JobAPIs["Job APIs\nAdzuna, JSearch, RSS"]
+    end
+
+    Scout --> Search
+    Search --> Review
+    Review --> Tailor
+    Tailor --> Complete
+    Complete --> Storage
+    Search -->|"Reads applied/dismissed"| Storage
+    Search --> AzureSearchClient
+    Review -->|"Scoring prompts"| ClaudeAPI
+    Tailor -->|"Tailoring prompts"| ClaudeAPI
+    AzureSearchClient -->|"REST queries"| AzureSearchService
+    Search -->|"Fetch listings"| JobAPIs
