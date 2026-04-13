@@ -2,7 +2,7 @@
 
 **Role Target:** Principal Software Engineer, AI Focus | Microsoft  
 **Interview:** April 15, 2026  
-**Author:** Carmen Reed, Solutions Architect, 28 years enterprise delivery
+**Author:** Carmen Reed, Solutions Architect, decades of enterprise delivery
 
 ---
 
