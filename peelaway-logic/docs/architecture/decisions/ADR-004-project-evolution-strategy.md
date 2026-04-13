@@ -60,7 +60,7 @@ The choice of Claude Code over Gemini Code Assist or other tools was based on th
 - Two parallel AI stories required for the portfolio: Claude Code for the pipeline, Semantic Kernel for the Microsoft AI demo
 
 **Validation:**
-PeelAway Logic found and scored the Microsoft Principal Software Engineer position that is the subject of the April 15, 2026 interview. The system works as designed in production.
+PeelAway Logic has been used to find and score real job opportunities. The system works as designed in production.
 
 ---
 

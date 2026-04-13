@@ -15,7 +15,7 @@ PeelAway Logic is a multi-phase agentic pipeline that transforms the job search 
 
 The application was built to fill a specific gap: existing AI job search tools required constant manual copy-paste between disconnected prompts and had no quality gates. PeelAway Logic replaces that with a pipeline where each phase produces a structured output that feeds the next, with human approval at every gate.
 
-Carmen used PeelAway Logic to find and apply for this Microsoft position. It is not a demo. It is production software used daily.
+PeelAway Logic is not a demo. It is production software used daily.
 
 ---
 

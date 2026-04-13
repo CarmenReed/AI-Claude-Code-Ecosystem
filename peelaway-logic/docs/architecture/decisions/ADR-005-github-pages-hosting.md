@@ -8,7 +8,7 @@
 
 ## Context
 
-PeelAway Logic is a React single-page application with no server-side requirements for its core pipeline functionality. Hosting decisions for a personal portfolio project are constrained by cost, setup time, and the need to demonstrate the application working before the April 15 interview.
+PeelAway Logic is a React single-page application with no server-side requirements for its core pipeline functionality. Hosting decisions for a personal portfolio project are constrained by cost, setup time, and the need to have the application working quickly.
 
 Two viable options existed: GitHub Pages (free, zero configuration, already used by the repository) and Azure Static Web Apps (Azure-native, better CI/CD integration, custom domain support, serverless API routes via Functions).
 
@@ -18,7 +18,7 @@ The time constraint was real: deploying to a new hosting platform during an acti
 
 ## Decision
 
-Continue hosting on GitHub Pages using the existing GitHub Actions deployment workflow. The decision is explicitly pragmatic and time-bound: GitHub Pages meets all functional requirements for the sprint and interview window, and the migration path to Azure Static Web Apps is fully documented for the interview conversation.
+Continue hosting on GitHub Pages using the existing GitHub Actions deployment workflow. The decision is explicitly pragmatic and time-bound: GitHub Pages meets all functional requirements for the current sprint, and the migration path to Azure Static Web Apps is fully documented.
 
 This decision is the direct subject of the "Azure Migration Path" section below.
 
@@ -29,7 +29,7 @@ This decision is the direct subject of the "Azure Migration Path" section below.
 | Option | Pros | Cons |
 |---|---|---|
 | GitHub Pages (current) | Zero cost, zero configuration, already working, custom 404 handling with SPA redirect workaround | No staging slots, no custom domain without DNS configuration, no server-side API routes for Managed Identity, CORS configuration for Azure AI Search is less clean |
-| Azure Static Web Apps (Free tier) | First-class Azure integration, staging slots, custom domain, API routes with Managed Identity support, native GitHub Actions integration | Free tier requires Azure account setup and configuration, global CDN not available on free tier, API routes add deployment complexity, setup time during interview sprint was a constraint |
+| Azure Static Web Apps (Free tier) | First-class Azure integration, staging slots, custom domain, API routes with Managed Identity support, native GitHub Actions integration | Free tier requires Azure account setup and configuration, global CDN not available on free tier, API routes add deployment complexity, setup time during the sprint was a constraint |
 | Azure Static Web Apps (Standard tier) | All free tier benefits plus global CDN, more API calls, custom authentication | Monthly cost ($9/month), overkill for a personal portfolio |
 | Vercel | Excellent Next.js/React support, fast global CDN, generous free tier | Not Azure, adds nothing to the Microsoft portfolio story |
 
@@ -38,7 +38,7 @@ This decision is the direct subject of the "Azure Migration Path" section below.
 ## Consequences
 
 **Positive:**
-- Zero incremental work during the interview sprint: existing GitHub Actions workflow handles build and deploy on every push to main
+- Zero incremental work during the sprint: existing GitHub Actions workflow handles build and deploy on every push to main
 - Free tier with no cost ceiling concern
 - GitHub Pages URL (carmenreed.github.io/PeelAway-Logic) is already indexed and shareable
 
@@ -70,4 +70,4 @@ This decision has the clearest and most direct Azure migration path of any ADR i
 
 Steps 1 through 4 can be executed in under two hours. The query key elimination (steps 5 through 8) takes an additional hour. The full migration to a production-grade Azure hosting pattern is a well-understood, low-risk operation.
 
-The reason this migration has not occurred is not lack of knowledge. It is deliberate prioritization: architecture documentation and AI integration features provide more interview value in the sprint window than hosting infrastructure changes.
+The reason this migration has not occurred is not lack of knowledge. It is deliberate prioritization: architecture documentation and AI integration features provide more value in the sprint window than hosting infrastructure changes.

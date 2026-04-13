@@ -77,7 +77,7 @@ No deployment occurs if tests fail or doc-lint reports violations. This is the s
 
 ## Chapter 5: Azure Integration (April 2026)
 
-Two Azure integrations were added to demonstrate Microsoft AI platform fluency ahead of the April 15 interview.
+Two Azure integrations were added to demonstrate Microsoft AI platform fluency.
 
 **Azure AI Search (REST client pattern).** A new service module wraps the Azure AI Search REST API with no Azure SDK dependency. This allows the application to remain a static deployment to GitHub Pages with zero server-side infrastructure. The trade-off is explicit: no Managed Identity, no token refresh. The enterprise migration path uses the @azure/search-documents SDK with DefaultAzureCredential against an Azure Static Web App. See [ADR-002](./docs/architecture/decisions/ADR-002-rest-client-over-sdk.md).
 
