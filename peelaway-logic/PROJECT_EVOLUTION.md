@@ -51,7 +51,7 @@ The key architectural decisions made at this stage:
 
 **Decision: Human gates at every phase transition.** No phase output advances to the next phase without explicit user approval. This is not a UX nicety. It is an architectural requirement that prevents AI hallucinations from propagating through the pipeline. The user reviews scored jobs before any JD fetch occurs. The user reviews tailored content before any application action is taken. See [ADR-003](./docs/architecture/decisions/ADR-003-human-gated-pipeline.md).
 
-**Decision: Structured output contracts between phases.** Each phase produces a typed data structure. The Search phase produces a normalized array of job objects with source, title, company, URL, and raw description. The Review phase adds score, rationale, and promotion status. The Tailor phase adds the grounded resume draft. Data contracts prevent downstream phases from operating on undefined or malformed input.
+**Decision: Structured output contracts between phases.** Each phase produces a typed data structure. The Scout phase produces scored and ranked job arrays after searching, deduplicating, and scoring. The Review phase adds human-approved selection status. The Complete phase generates tailored documents grounded only in the uploaded resume. Data contracts prevent downstream phases from operating on undefined or malformed input.
 
 **Decision: localStorage for persistence, with a documented migration path.** For a client-side-only application deployed to GitHub Pages, localStorage was the correct scope. Cross-session applied and dismissed job tracking is implemented using two localStorage keys. The migration path to Cosmos DB is documented in the Bicep template.
 
@@ -61,13 +61,14 @@ The key architectural decisions made at this stage:
 
 Growth happened in three areas: test coverage, search quality, and CI/CD maturity.
 
-**Test coverage.** Starting from zero, the test suite grew to 346 tests across 15 test files. Tests cover layer-level search logic, scoring batch behavior, resume parsing, anti-hallucination constraints, and deduplication. The anti-hallucination tests explicitly assert that tailored content does not introduce phrases not present in the uploaded resume.
+**Test coverage.** Starting from zero, the test suite grew to 453 unit and component tests across 16 suites (Jest + React Testing Library), plus 62 E2E tests across 7 spec files (Microsoft Playwright + Chromium). Tests cover layer-level search logic, scoring batch behavior, resume parsing, anti-hallucination constraints, deduplication, and complete user workflows through all four pipeline phases. The anti-hallucination tests explicitly assert that tailored content does not introduce phrases not present in the uploaded resume. All external APIs are mocked at the network layer (Jest mocks for unit tests, Playwright `page.route()` for E2E), so tests are deterministic and free to run.
 
 **Search layer performance.** Early versions returned uncapped results: Layer 2 RSS alone could return 350 items across 7 feeds. Scoring 100+ jobs at 8 per batch with 15-second delays produced 3 to 10 minutes of waiting per search. The fix was a per-layer cap of 10 results post-dedup, producing a maximum of ~30 job descriptions per session. Scoring time dropped from 3 to 10 minutes to approximately 45 seconds. API cost per search dropped approximately 40%.
 
-**CI/CD maturity.** Three GitHub Actions workflows now run on push to main:
-- Test runner (Jest, all 346 tests must pass)
+**CI/CD maturity.** Four GitHub Actions workflows now run on push to main:
+- Test runner (Jest: 453 tests must pass; Playwright: 62 E2E tests against Chromium)
 - Doc quality (doc-lint.js checks em-dash violations, broken internal links, stale version numbers)
+- Env audit (blocks pushes containing QA references in production docs)
 - Deploy (build and push to GitHub Pages)
 
 No deployment occurs if tests fail or doc-lint reports violations. This is the same quality-gate philosophy applied to documentation that most teams only apply to code.

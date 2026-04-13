@@ -34,7 +34,7 @@ graph TB
 
     PeelAway["PeelAway Logic\nMulti-phase agentic\njob search pipeline"]
 
-    User -->|"Searches, scores, reviews, tailors"| PeelAway
+    User -->|"Searches, scores, reviews, generates docs"| PeelAway
     PeelAway -->|"Fetch job listings"| Adzuna
     PeelAway -->|"Fetch job listings"| JSearch
     PeelAway -->|"Parse feeds"| RSS
@@ -53,33 +53,29 @@ The internal structure of PeelAway Logic: what runs where, what stores what, and
 
 ```mermaid
 graph TB
-    subgraph Browser["Browser (React SPA)"]
-        Scout["Scout Phase\nRole criteria input\nSearch configuration builder"]
-        Search["Search Phase\nLayer 1: Adzuna + JSearch\nLayer 2: RSS feeds\nLayer 3: ATS web search\nDedup and merge"]
-        Review["Review Phase\nBatch scoring via Claude Haiku\nFull JD fetch for top 5\nRe-score via Claude Sonnet"]
-        Tailor["Tailor Phase\nResume PDF upload\nGrounded tailoring via Claude Sonnet\nAnti-hallucination constraints"]
-        Complete["Complete Phase\nApplication record saved\nApplied/dismissed tracking"]
-        Storage["localStorage\nasp-applied-jobs\njsp-dismissed-jobs\nSearch configuration cache"]
+    subgraph Browser["Browser (React SPA, Create React App)"]
+        Scout["Scout Phase\nResume upload + profile extraction\n3 search layers (Adzuna, JSearch, RSS, ATS)\nDedup, pre-filter, score, fetch JDs, re-score"]
+        Review["Review Phase\nTiered results (Strong/Possible/Weak/Rejected)\nSort by score, date, company\nHuman Gate: explicit job selection"]
+        Complete["Complete Phase\nResume + cover letter generation per job\nAnti-hallucination constraints\nDownload, copy, mark as applied"]
+        Storage["localStorage\nPipeline state, applied jobs,\ndismissed jobs, search config"]
         AzureSearchClient["azureSearchService.js\nREST client for Azure AI Search\nNo SDK dependency"]
     end
 
     subgraph External["External Services"]
-        ClaudeAPI["Anthropic Claude API"]
+        ClaudeAPI["Anthropic Claude API\nHaiku: scoring\nSonnet: tailoring"]
         AzureSearchService["Azure AI Search\nF0 free tier"]
         JobAPIs["Job APIs\nAdzuna, JSearch, RSS"]
     end
 
-    Scout --> Search
-    Search --> Review
-    Review --> Tailor
-    Tailor --> Complete
+    Scout --> Review
+    Review --> Complete
     Complete --> Storage
-    Search -->|"Reads applied/dismissed"| Storage
-    Search --> AzureSearchClient
-    Review -->|"Scoring prompts"| ClaudeAPI
-    Tailor -->|"Tailoring prompts"| ClaudeAPI
+    Scout -->|"Reads applied/dismissed"| Storage
+    Scout --> AzureSearchClient
+    Scout -->|"Scoring prompts"| ClaudeAPI
+    Complete -->|"Tailoring prompts"| ClaudeAPI
     AzureSearchClient -->|"REST queries"| AzureSearchService
-    Search -->|"Fetch listings"| JobAPIs
+    Scout -->|"Fetch listings"| JobAPIs
 ```
 
 ---
@@ -90,25 +86,17 @@ The data contract between phases: what goes in, what comes out, and where the hu
 
 ```mermaid
 flowchart TD
-    A["Scout Phase\nInput: role title, location, seniority, keywords\nOutput: SearchConfig object"]
+    A["Scout Phase\nInput: resume (PDF/TXT/paste), search filters\nProcess: extract profile, run 3 search layers (cap 10 each),\ndedup, pre-filter, score via Haiku, fetch JDs, re-score via Sonnet\nOutput: scored and ranked job array"]
 
-    Gate1{{"Human Gate: Review and confirm search configuration"}}
+    Gate1{{"Human Gate: Score & Review triggers scoring; results presented in tiers"}}
 
-    B["Search Phase\nInput: SearchConfig\nProcess: Layer 1 + 2 + 3, dedup, cap at 10 per layer\nOutput: RawJob array, max ~30 items"]
+    B["Review Phase\nInput: ScoredJob array\nDisplay: Strong (8-10), Possible (6-7), Weak (3-5), Rejected (0-2)\nSort by score, date posted, or company\nOutput: user-selected shortlist"]
 
-    Gate2{{"Human Gate: Review search results summary"}}
+    Gate2{{"Human Gate: User selects jobs to advance, dismisses others"}}
 
-    C["Review Phase\nInput: RawJob array\nProcess: batch score via Haiku, promote top 5\nFetch full JDs, re-score via Sonnet\nOutput: ScoredJob array with rationale and rank"]
+    C["Complete Phase\nInput: Selected ScoredJob + resume\nProcess: generate resume and cover letter per job (one click, one API call each)\nAnti-hallucination: content grounded only in uploaded resume\nOutput: tailored documents + applied status in localStorage"]
 
-    Gate3{{"Human Gate: User selects jobs to tailor, dismisses others"}}
-
-    D["Tailor Phase\nInput: Selected ScoredJob + resume PDF\nProcess: ground tailoring prompt in resume content only\nOutput: TailoredResume object, no invented content"]
-
-    Gate4{{"Human Gate: User reviews and approves tailored content"}}
-
-    E["Complete Phase\nInput: Approved TailoredResume + ScoredJob\nProcess: save to localStorage, mark as applied\nOutput: persistent application record"]
-
-    A --> Gate1 --> B --> Gate2 --> C --> Gate3 --> D --> Gate4 --> E
+    A --> Gate1 --> B --> Gate2 --> C
 ```
 
 ---
@@ -121,7 +109,7 @@ How Azure AI Search and the Semantic Kernel demo fit into the system.
 graph LR
     subgraph PeelAway_Current["PeelAway Logic (Current)"]
         AzureClient["azureSearchService.js\nREST client pattern\nFetch + JSON, no SDK"]
-        SKDemo["Semantic Kernel Demo\nPython, standalone\nPlugins: Scout, Score, Tailor"]
+        SKDemo["Semantic Kernel Demo\nPython, standalone\nPlugins: JobScoring, ResumeParser"]
     end
 
     subgraph Azure_Current["Azure (F0 Free Tier)"]
@@ -166,10 +154,11 @@ timeline
               : Structured output contracts between phases
               : localStorage persistence with dedup
     section December 2025 to February 2026
-        Growth : 346 tests across 15 test files
-               : CI/CD via GitHub Actions (3 workflows)
+        Growth : 453 unit/component tests across 16 suites (Jest + RTL)
+               : 62 E2E tests across 7 specs (Microsoft Playwright + Chromium)
+               : CI/CD via GitHub Actions (4 workflows)
                : Anti-hallucination tests as first-class coverage
-               : Doc-lint quality enforcement
+               : Doc-lint and env-audit quality enforcement
     section March to April 2026
         Azure Integration : Azure AI Search (F0, REST client)
                           : Semantic Kernel Python demo

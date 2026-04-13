@@ -12,7 +12,7 @@
 
 | Skill | Production Evidence | Azure Path |
 |---|---|---|
-| Multi-phase human-gated pipelines | PeelAway Logic: Scout, Search, Review, Tailor phases with explicit human approval gates | Azure AI Foundry prompt flows with approval steps |
+| Multi-phase human-gated pipelines | PeelAway Logic: Scout, Review, Complete phases (4-phase pipeline) with explicit human approval gates | Azure AI Foundry prompt flows with approval steps |
 | Anti-hallucination prompt engineering | PeelAway Logic: black-box deficiency prompting, strict output constraints, 0% fabrication rate on resume tailoring | Azure AI Content Safety + Foundry evaluation metrics |
 | Recursive AI-assisted refinement | PeelAway architecture iterated using Claude Code agents auditing their own output | Azure AI Foundry evaluation pipeline |
 | Context window management | Resume + job description combined into single grounded prompt to prevent hallucination | Azure AI Foundry RAG with Azure AI Search |
@@ -22,6 +22,7 @@
 | Skill | Production Evidence | Azure Path |
 |---|---|---|
 | Azure AI Search integration | PeelAway Logic: REST client against F0 free tier, resume + JD semantic similarity | Full SDK with DefaultAzureCredential + Managed Identity |
+| Microsoft Playwright E2E testing | PeelAway Logic: 62 E2E tests across 7 specs, network-level API mocking via page.route(), CI/CD integration with Chromium | Azure DevOps Pipelines with Playwright Test |
 | Semantic Kernel orchestration | PeelAway SK Python demo: pipeline phases as SK plugins, swap-ready for Azure OpenAI | Production SK with Azure OpenAI, Managed Identity, function calling |
 | Azure Functions event-driven AI | SpaceGenius: HTTP-triggered functions as Claude API proxy, timer-triggered pricing intelligence | Logic Apps native connectors + Azure OpenAI |
 | Service Bus event chaining | SpaceGenius: ADO webhook to Service Bus topic to chained Function subscribers | Full Logic Apps workflow with run history audit |
@@ -49,7 +50,7 @@
 
 | Skill | Production Evidence | Azure Path |
 |---|---|---|
-| AI-generated test suites | PeelAway: 346 tests, 15 test files; SpaceGenius: Claude Code /generate-tests slash command from Gherkin ACs | Copilot Workspace PBI-to-PR loop |
+| AI-generated test suites | PeelAway: 453 unit/component tests (16 suites, Jest) + 62 E2E tests (7 specs, Playwright); SpaceGenius: Claude Code /generate-tests slash command from Gherkin ACs | Copilot Workspace PBI-to-PR loop |
 | Automated PR descriptions | SpaceGenius: /create-pr slash command from git diff + ADO ticket link | Copilot Enterprise whole-repo context |
 | Requirements ingestion pipeline | SpaceGenius doc pipeline: raw meeting notes to BRD/FRD/LOE/Gherkin ACs via Claude API | Azure AI Foundry prompt flow + ADO native connector |
 | Velocity-grounded estimation | SpaceGenius: ADO Analytics OData feed + Claude API generates granular estimate with confidence range | Azure OpenAI fine-tuned on team velocity data |

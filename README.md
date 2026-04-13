@@ -23,7 +23,7 @@ This repository is the architectural evidence base for two production AI initiat
 Every significant choice is documented in Architecture Decision Records (ADRs) with explicit trade-off analysis, alternatives considered, and an Azure Migration Path section showing what changes at enterprise scale. The gap between the pragmatic decision and the enterprise-ideal is not a gap in knowledge. It is a documented constraint with a clear upgrade path.
 
 ### System Thinking
-Both initiatives required reasoning across the full system: cost, performance, compliance, team capability, and toolchain constraints. The PeelAway Logic pipeline evolved from disconnected AI tools to a multi-phase agentic architecture with 346 automated tests, CI/CD, and cloud search integration. The SpaceGenius initiative maps 12 production pain points to solutions that use only provisioned Azure resources, paired with the enterprise vision that full Azure AI licensing unlocks.
+Both initiatives required reasoning across the full system: cost, performance, compliance, team capability, and toolchain constraints. The PeelAway Logic pipeline evolved from disconnected AI tools to a multi-phase agentic architecture with 453 unit/component tests (Jest), 62 E2E tests (Microsoft Playwright), CI/CD, and cloud search integration. The SpaceGenius initiative maps 12 production pain points to solutions that use only provisioned Azure resources, paired with the enterprise vision that full Azure AI licensing unlocks.
 
 ### AI Experience in Production
 - 1.5 years of production AI at SpaceGenius: automated onboarding, PR review, backlog triage, retrospective synthesis
@@ -69,7 +69,7 @@ AI-Claude-Code-Ecosystem/
 ## Technology Stack
 
 ### PeelAway Logic
-React, Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), GitHub Pages, Jest (346 tests), GitHub Actions CI/CD
+React (Create React App), Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), GitHub Pages, Jest (453 tests, 16 suites), Microsoft Playwright (62 E2E tests), GitHub Actions CI/CD, GitHub Copilot, Claude Code
 
 ### SpaceGenius (Production)
 C# / .NET, ASP.NET Web API, React, SQL Server / SQL Managed Instance, Azure Functions, Azure App Services, Azure Service Bus, Azure Key Vault, Managed Identity, Azure DevOps Pipelines, ARM templates

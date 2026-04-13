@@ -26,10 +26,9 @@ The gate structure:
 
 | Gate | User Action Required | Risk Contained |
 |---|---|---|
-| Scout to Search | User confirms search configuration | Prevents a misconfigured search from wasting API credits on irrelevant results |
-| Search to Review | User reviews result summary | Prevents scoring a set of results that are obviously wrong (wrong location, wrong seniority) |
-| Review to Tailor | User selects which jobs to tailor and dismisses the rest | Prevents resume tailoring for jobs the user has not consciously chosen |
-| Tailor to Complete | User reviews and approves tailored content | Prevents fabricated or misaligned content from reaching an application |
+| Scout to Review | "Score & Review" button triggers scoring; user controls when scoring begins | Prevents wasting API credits on misconfigured searches or irrelevant results |
+| Review to Complete | User selects which jobs to advance and dismisses the rest | Prevents document generation for jobs the user has not consciously chosen |
+| Complete: per-document | Each resume and cover letter is generated individually on click | Prevents bulk generation; user reviews each document before downloading |
 
 The gates are implemented as UI state transitions. The pipeline does not advance programmatically. The user clicks to proceed.
 

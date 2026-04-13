@@ -50,7 +50,7 @@ The choice of Claude Code over Gemini Code Assist or other tools was based on th
 ## Consequences
 
 **Positive:**
-- Rebuilt with 346 tests from the first sprint, covering every layer and phase
+- Rebuilt with comprehensive test coverage from the first sprint (now 453 unit/component tests + 62 E2E tests), covering every layer and phase
 - Data contracts between phases eliminate the copy-paste and format ambiguity of the Gem model
 - Claude Code's CLAUDE.md architecture means every development session starts with full project context, not a cold start
 - The project can be documented, tested, and maintained like production software, not like a collection of prompts
@@ -68,7 +68,7 @@ PeelAway Logic found and scored the Microsoft Principal Software Engineer positi
 
 In a Microsoft enterprise deployment, the architectural patterns transfer directly. The specific tools change:
 
-1. The multi-phase pipeline becomes an Azure AI Foundry prompt flow with the same phase sequence: Scout, Search, Review, Tailor, Complete
+1. The multi-phase pipeline becomes an Azure AI Foundry prompt flow with the same phase sequence: Scout, Review, Complete
 2. The CLAUDE.md knowledge architecture becomes a RAG index in Azure AI Search, updated via a DevOps pipeline step on every deploy
 3. The human gate UI becomes Azure Logic Apps approval connectors or Teams adaptive card approvals for enterprise integration
 4. Claude Code as the development tool becomes GitHub Copilot Enterprise with full repo context, eliminating the manual CLAUDE.md authoring burden

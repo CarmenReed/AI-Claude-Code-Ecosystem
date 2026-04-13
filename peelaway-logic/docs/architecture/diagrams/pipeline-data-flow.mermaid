@@ -3,22 +3,14 @@
 %% Human gates are first-class nodes, not just transitions
 
 flowchart TD
-    A["Scout Phase\nInput: role title, location, seniority, keywords\nOutput: SearchConfig object"]
+    A["Scout Phase\nInput: resume (PDF/TXT/paste), search filters\nProcess: extract profile, run 3 search layers (cap 10 each),\ndedup, pre-filter, score via Haiku, fetch JDs, re-score via Sonnet\nOutput: scored and ranked job array"]
 
-    Gate1{{"Human Gate: Review and confirm search configuration"}}
+    Gate1{{"Human Gate: Score & Review triggers scoring; results presented in tiers"}}
 
-    B["Search Phase\nInput: SearchConfig\nProcess: Layer 1 + 2 + 3, dedup, cap at 10 per layer\nOutput: RawJob array, max ~30 items"]
+    B["Review Phase\nInput: ScoredJob array\nDisplay: Strong (8-10), Possible (6-7), Weak (3-5), Rejected (0-2)\nSort by score, date posted, or company\nOutput: user-selected shortlist"]
 
-    Gate2{{"Human Gate: Review search results summary"}}
+    Gate2{{"Human Gate: User selects jobs to advance, dismisses others"}}
 
-    C["Review Phase\nInput: RawJob array\nProcess: batch score via Haiku, promote top 5\nFetch full JDs, re-score via Sonnet\nOutput: ScoredJob array with rationale and rank"]
+    C["Complete Phase\nInput: Selected ScoredJob + resume\nProcess: generate resume and cover letter per job (one click, one API call each)\nAnti-hallucination: content grounded only in uploaded resume\nOutput: tailored documents + applied status in localStorage"]
 
-    Gate3{{"Human Gate: User selects jobs to tailor, dismisses others"}}
-
-    D["Tailor Phase\nInput: Selected ScoredJob + resume PDF\nProcess: ground tailoring prompt in resume content only\nOutput: TailoredResume object, no invented content"]
-
-    Gate4{{"Human Gate: User reviews and approves tailored content"}}
-
-    E["Complete Phase\nInput: Approved TailoredResume + ScoredJob\nProcess: save to localStorage, mark as applied\nOutput: persistent application record"]
-
-    A --> Gate1 --> B --> Gate2 --> C --> Gate3 --> D --> Gate4 --> E
+    A --> Gate1 --> B --> Gate2 --> C

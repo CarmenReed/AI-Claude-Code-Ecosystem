@@ -3,8 +3,9 @@
 **Type:** Production Application (Personal Portfolio + Daily Driver)  
 **Author:** Carmen Reed, Solutions Architect  
 **Live Site:** https://carmenreed.github.io/PeelAway-Logic  
-**Stack:** React, Anthropic Claude API, Azure AI Search, Semantic Kernel (Python demo)  
-**Test Coverage:** 346 tests across 15 test files, CI/CD via GitHub Actions
+**Stack:** React (Create React App), Anthropic Claude API, Azure AI Search, Microsoft Playwright, Semantic Kernel (Python demo)  
+**Dev Tools:** Claude Code (implementation), GitHub Copilot (inline questions), Claude Cowork (planning)  
+**Test Coverage:** 453 unit/component tests across 16 suites (Jest + RTL), 62 E2E tests across 7 specs (Microsoft Playwright), CI/CD via GitHub Actions
 
 ---
 
@@ -22,33 +23,29 @@ Carmen used PeelAway Logic to find and apply for this Microsoft position. It is 
 
 ```
 Scout Phase
-  User defines role criteria, target companies, experience level, location
-  Output: structured search configuration
-
-Search Phase
+  Upload resume (PDF or TXT) or paste text; app extracts skills, experience, location
+  Configure search filters (work type, date posted, employment type, zip code + radius)
   Layer 1: Adzuna API + JSearch API (capped at 10 per source)
-  Layer 2: RSS feeds from 7 direct employer and job board feeds (capped at 10)
-  Layer 3: ATS direct company search via web (capped at 10)
-  Dedup + merge: max ~30 job descriptions per session
-  Output: normalized job description array
+  Layer 2: RSS feeds (WeWorkRemotely, Remotive, RemoteOK, Himalayas, Jobicy)
+  Layer 3: ATS boards (Greenhouse, Lever, Workday) via AI-driven web search
+  Quick Score: paste a URL or job description for immediate scoring
+  "Score & Review" deduplicates, pre-filters, scores, fetches full JDs, re-scores
+  Output: scored and ranked job array
 
 Review Phase
-  Claude API scores all ~30 JDs in batches of 8 (Haiku model for cost efficiency)
-  Scoring criteria: role match, seniority fit, location/remote preference, growth signal
-  Top 5 promoted to full JD fetch (Sonnet model for quality)
-  Re-score with full JD content
-  Output: ranked and annotated shortlist
-
-Tailor Phase
-  User uploads resume PDF
-  Claude API generates tailored resume content grounded ONLY in uploaded resume
-  Anti-hallucination constraint: fabrication of experience is architecturally prevented
-  Output: tailored resume draft with no invented content
+  Tiered results: Strong Match (8-10), Possible (6-7), Weak (3-5), Rejected (0-2)
+  Sort by score, date posted (newest first), or company
+  Fresh postings (within 7 days) display green badge; stale dates show orange warning
+  Human Gate: user selects which jobs to advance; no API calls until explicit approval
+  Output: user-approved shortlist
 
 Complete Phase
-  Application record saved to localStorage with applied/dismissed tracking
-  Cross-session dedup prevents previously applied or dismissed jobs from reappearing
-  Output: persistent application history
+  Each approved job displays as a card with link to original posting
+  Two independent buttons per job: "Create Resume" and "Create Cover Letter"
+  Each document is one click, one API call; anti-hallucination enforced at prompt layer
+  Download, copy, or regenerate any document individually
+  Mark jobs as applied; applied jobs tracked across sessions, excluded from future scouts
+  Output: tailored documents + persistent application history
 ```
 
 ---
@@ -59,6 +56,8 @@ Complete Phase
 |---|---|
 | [ARCHITECTURE.md](./docs/architecture/ARCHITECTURE.md) | C4 system overview with embedded Mermaid diagrams |
 | [PROJECT_EVOLUTION.md](./PROJECT_EVOLUTION.md) | Technical narrative: from Gemini Gems to Azure AI |
+| [AI_SKILLS_INVENTORY.md](https://github.com/CarmenReed/PeelAway-Logic/blob/main/docs/AI_SKILLS_INVENTORY.md) | Full inventory of AI tools, patterns, and Microsoft/Azure skills demonstrated |
+| [TEST-STRATEGY-OVERVIEW.md](https://github.com/CarmenReed/PeelAway-Logic/blob/main/docs/TEST-STRATEGY-OVERVIEW.md) | Two-tier testing strategy (Jest + Playwright) with CI/CD integration |
 | [ADR-001](./docs/architecture/decisions/ADR-001-claude-over-azure-openai.md) | Why Anthropic Claude over Azure OpenAI |
 | [ADR-002](./docs/architecture/decisions/ADR-002-rest-client-over-sdk.md) | Why client-side REST over Azure SDK |
 | [ADR-003](./docs/architecture/decisions/ADR-003-human-gated-pipeline.md) | Why human-gated pipeline over fully autonomous |
@@ -96,8 +95,9 @@ See [azure-resources.bicep](./docs/architecture/azure-resources.bicep) for the f
 
 | Metric | Value |
 |---|---|
-| Test coverage | 346 tests, 15 test files |
+| Unit/component tests | 453 tests across 16 suites (Jest + React Testing Library) |
+| E2E tests | 62 tests across 7 specs (Microsoft Playwright + Chromium) |
 | Anti-hallucination rate | 0% fabrication on resume tailoring (architecturally enforced) |
 | Search performance | ~30 max results per session, ~45 second scoring time |
 | API cost per session | ~$0.60 to $0.90 after layer caps (down from ~$1.00 to $1.55) |
-| CI pipeline | Automated test run, doc-lint, and deploy on every push to main |
+| CI pipeline | Automated test run (Jest + Playwright), doc-lint, env-audit, and deploy on every push to main |

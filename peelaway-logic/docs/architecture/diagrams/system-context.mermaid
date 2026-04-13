@@ -24,7 +24,7 @@ graph TB
 
     PeelAway["PeelAway Logic\nMulti-phase agentic\njob search pipeline"]
 
-    User -->|"Searches, scores, reviews, tailors"| PeelAway
+    User -->|"Searches, scores, reviews, generates docs"| PeelAway
     PeelAway -->|"Fetch job listings"| Adzuna
     PeelAway -->|"Fetch job listings"| JSearch
     PeelAway -->|"Parse feeds"| RSS

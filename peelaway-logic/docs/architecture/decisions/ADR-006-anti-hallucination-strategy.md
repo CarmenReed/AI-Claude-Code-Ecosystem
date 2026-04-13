@@ -8,7 +8,7 @@
 
 ## Context
 
-PeelAway Logic's Tailor phase generates resume content using an LLM given two inputs: the user's uploaded resume PDF and a target job description. The risk is specific and severe: if the LLM generates resume content that is not derivable from the uploaded resume, that fabricated content could reach a hiring manager and create legal and reputational exposure for the user.
+PeelAway Logic's Complete phase generates resume and cover letter content using an LLM given two inputs: the user's uploaded resume and a target job description. The risk is specific and severe: if the LLM generates resume content that is not derivable from the uploaded resume, that fabricated content could reach a hiring manager and create legal and reputational exposure for the user.
 
 This is not a theoretical risk. LLMs hallucinate confidently. Without explicit constraints, a model given a job description requiring "10 years of Kubernetes experience" and a resume showing 2 years of Docker experience will often bridge that gap with invented Kubernetes experience because the training objective rewards coherent, helpful output over strict factual grounding.
 
