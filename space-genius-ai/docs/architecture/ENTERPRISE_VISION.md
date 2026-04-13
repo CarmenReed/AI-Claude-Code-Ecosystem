@@ -44,7 +44,7 @@ Layer 1: Foundation (Key Vault + Managed Identity + Azure Functions + App Servic
 ### Azure OpenAI (GPT-4o)
 
 **Replaces:** Anthropic Claude API in all 12 solution patterns  
-**Deployment model:** Two named deployments per the PeelAway Logic ADR-001 pattern: one capacity-optimized for batch operations (documentation pipeline, estimation, backlog dedup), one quality-optimized for high-stakes outputs (Gherkin AC generation, rate management NLP, customer reservations)  
+**Deployment model:** Two named deployments: one capacity-optimized for batch operations (documentation pipeline, estimation, backlog dedup), one quality-optimized for high-stakes outputs (Gherkin AC generation, rate management NLP, customer reservations)  
 **Authentication:** DefaultAzureCredential with Managed Identity. No API keys in any code.  
 **Data residency:** All data processed within the Microsoft tenant. No third-party egress.  
 **Content Safety:** Azure AI Content Safety layer applied to all customer-facing generated content before it reaches the UI.
