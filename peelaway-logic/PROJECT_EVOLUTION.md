@@ -8,7 +8,7 @@ This document exists because architecture decisions without context are just rul
 
 ---
 
-## Chapter 1: Genesis (October 2025)
+## Chapter 1: Genesis (February 2026)
 
 The origin was a problem every senior engineer recognizes: the job search process was consuming enormous cognitive overhead with almost no return.
 
@@ -41,7 +41,7 @@ These are not UI problems. They are architecture problems. The solution required
 
 ---
 
-## Chapter 3: The Pivot (November 2025)
+## Chapter 3: The Pivot (Late February 2026)
 
 The pivot was from disconnected prompts to a governed, multi-phase agentic pipeline built with Claude Code and React.
 
@@ -57,7 +57,7 @@ The key architectural decisions made at this stage:
 
 ---
 
-## Chapter 4: Growth (December 2025 to March 2026)
+## Chapter 4: Growth (March 2026)
 
 Growth happened in three areas: test coverage, search quality, and CI/CD maturity.
 
@@ -81,7 +81,7 @@ Two Azure integrations were added to demonstrate Microsoft AI platform fluency.
 
 **Azure AI Search (REST client pattern).** A new service module wraps the Azure AI Search REST API with no Azure SDK dependency. This allows the application to remain a static deployment to GitHub Pages with zero server-side infrastructure. The trade-off is explicit: no Managed Identity, no token refresh. The enterprise migration path uses the @azure/search-documents SDK with DefaultAzureCredential against an Azure Static Web App. See [ADR-002](./docs/architecture/decisions/ADR-002-rest-client-over-sdk.md).
 
-**Semantic Kernel Python demo.** A standalone Python module implements the PeelAway pipeline phases as Semantic Kernel plugins. The demo is explicitly swap-ready: the backing model is abstracted behind the SK kernel, and swapping from Anthropic Claude to Azure OpenAI requires changing two lines of configuration. This directly addresses the "can you use Microsoft AI orchestration" question. See [ADR-001](./docs/architecture/decisions/ADR-001-claude-over-azure-openai.md).
+**Semantic Kernel Python demo.** A standalone Python module implements the PeelAway pipeline phases as Semantic Kernel plugins. The demo is explicitly swap-ready: the backing model is abstracted behind the SK kernel, and swapping from Anthropic Claude to Azure OpenAI requires changing two lines of configuration. See [ADR-001](./docs/architecture/decisions/ADR-001-claude-over-azure-openai.md).
 
 ---
 
