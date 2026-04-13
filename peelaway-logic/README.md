@@ -65,7 +65,7 @@ Complete Phase
 | [ADR-005](./docs/architecture/decisions/ADR-005-github-pages-hosting.md) | Why GitHub Pages over Azure Static Web Apps |
 | [ADR-006](./docs/architecture/decisions/ADR-006-anti-hallucination-strategy.md) | Anti-hallucination prompt engineering strategy |
 | [azure-resources.bicep](./docs/architecture/azure-resources.bicep) | IaC documentation for enterprise Azure deployment |
-| [GOVERNANCE.md](./docs/GOVERNANCE.md) | Documentation standards and CI quality enforcement |
+| [GOVERNANCE.md](./docs/GOVERNANCE.md) | Documentation standards, HCI governance, CI quality enforcement |
 
 ---
 
@@ -96,8 +96,8 @@ See [azure-resources.bicep](./docs/architecture/azure-resources.bicep) for the f
 | Metric | Value |
 |---|---|
 | Unit/component tests | 434 tests across 17 suites (Jest + React Testing Library) |
-| E2E tests | 434 tests across 8 specs (Microsoft Playwright + Chromium) |
+| E2E tests | 62 tests across 8 specs (Microsoft Playwright + Chromium) |
 | Anti-hallucination rate | 0% fabrication on resume tailoring (architecturally enforced) |
 | Search performance | ~30 max results per session, ~45 second scoring time |
 | API cost per session | ~$0.60 to $0.90 after layer caps (down from ~$1.00 to $1.55) |
-| CI pipeline | Automated test run (Jest + Playwright), doc-lint, env-audit, and deploy on every push to main |
+| CI pipeline | Automated test run (Jest + Playwright), doc-lint, env-audit, HCI governance audit, and deploy on every push to main |

@@ -1,8 +1,8 @@
-# Documentation Governance
+# Documentation and HCI Governance
 
 **Author:** Carmen Reed  
-**Date:** April 12, 2026  
-**Scope:** PeelAway Logic documentation standards, quality gates, and CI enforcement
+**Date:** April 13, 2026  
+**Scope:** PeelAway Logic documentation standards, HCI change governance, quality gates, and CI enforcement
 
 ---
 
@@ -70,20 +70,65 @@ Language: Node.js, no external dependencies
 | Version numbers that do not match package.json | Warns | Does not fail |
 | Common misspellings | Warns | Does not fail |
 
-### CI Workflow
+### CI Workflows
 
-File: `.github/workflows/doc-quality.yml`  
-Trigger: push to main, pull request to main
+Four GitHub Actions workflows run on every push to main:
 
-```yaml
-# Conceptual workflow structure (actual file in .github/workflows/)
-steps:
-  - checkout
-  - setup-node
-  - run: node scripts/doc-lint.js
-  # If doc-lint exits non-zero, the workflow fails
-  # Deployment does not proceed until this passes
-```
+| Workflow | File | Purpose |
+|---|---|---|
+| Deploy | `deploy.yml` | Build and deploy to GitHub Pages |
+| Doc Quality | `doc-quality.yml` | Run doc-lint.js (em-dash, broken link, ADR section checks) |
+| Environment Audit | `env-audit.yml` | Block pushes containing QA-environment references in production docs |
+| Update Docs | `update-docs.yml` | Auto-update test counts and documentation sync after source changes |
+
+No deployment occurs if tests fail or doc-lint reports violations.
+
+### Documentation Sync
+
+Script: `scripts/docs-sync.js`  
+Command: `npm run docs-sync`
+
+Rewrites test file lists, structural counts, and per-spec test counts in documentation so they never drift from the source tree. Hand-written descriptions on existing entries are preserved; new files get descriptions extracted from leading comments or a placeholder. The same script also runs as a step inside `update-docs.yml` so drift is caught even when developers forget.
+
+---
+
+## HCI Governance
+
+Automated tests verify that code is correct. They do not verify that the user experience is still correct. A refactor can keep every test green while quietly rewiring how a real user moves through the Scout, Review, Human Gate, and Complete phases. The HCI governance process catches these changes before they reach production.
+
+### How It Works
+
+Script: `scripts/hci-audit.js`  
+Command: `npm run hci-audit`
+
+The audit scans the diff between `origin/main` and the working tree, classifies every changed file into a tier, looks for HCI impact signals (routing changes, new interactive elements, copy edits, CSS rule changes, accessibility regressions), and emits a verdict.
+
+### Verdict Tiers
+
+| Verdict | Meaning | Action |
+|---|---|---|
+| GREEN | No HCI-relevant changes | Commit as normal |
+| YELLOW | Minor HCI impact, spot check recommended | Commit, then spot check before promotion |
+| RED | Significant HCI impact, UAT cycle warranted | Run UAT scenarios, record sign-off, then promote |
+
+The gate is non-blocking. RED warns loudly but the script exits `0`. The developer is trusted to act on the warning.
+
+### File Classification
+
+| Tier | What It Covers |
+|---|---|
+| Tier 1 (journey) | Phase orchestrators, routing, progress stepper, landing screen, header |
+| Tier 2 (interaction) | User-facing React components, user-visible copy sources |
+| Tier 3 (visual) | CSS and front-end assets |
+| Tier 4 (copy) | User story documents with acceptance criteria |
+| Non-HCI | Tests, scripts, config, non-user-story docs |
+
+### Accessibility Test Coverage
+
+The HCI audit's static heuristic (ARIA removals, alt text drops, keyboard handler removals) is paired with two dynamic test suites:
+
+- **Unit level** (`src/__tests__/accessibility.test.jsx`): uses `jest-axe` inside jsdom. Covers image alt text, button names, link names, form labels, ARIA validity, SVG labeling, and list structure.
+- **Browser level** (`e2e/09-accessibility.spec.ts`): uses `@axe-core/playwright` inside Chromium. Covers color contrast (WCAG 1.4.3), focus visibility, landmark regions, heading order, and keyboard reachability.
 
 ---
 
