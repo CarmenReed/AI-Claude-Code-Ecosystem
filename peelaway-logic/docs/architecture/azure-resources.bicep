@@ -3,8 +3,8 @@
 // Author: Carmen Reed
 // Date: 2026-04-12
 //
-// PURPOSE: This Bicep template DOCUMENTS the Azure resources PeelAway Logic would
-// provision in an enterprise deployment. It is not deployed in production.
+// PURPOSE: This Bicep template defines the Azure resources PeelAway Logic would
+// provision in an enterprise deployment. Validated against Azure resource schemas; pending deployment.
 // The portfolio application currently runs on:
 //   - GitHub Pages (static hosting)
 //   - Azure AI Search F0 free tier (manually provisioned)
