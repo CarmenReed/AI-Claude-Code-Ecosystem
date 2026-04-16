@@ -8,6 +8,8 @@
 
 ## Provisioned Resources (Available Today)
 
+Tiers marked "estimated" reflect the SKU expected from the ARM template configuration. Exact SKUs should be confirmed against the Azure portal or ARM template parameters before including this document in a stakeholder presentation.
+
 | Resource | Tier / SKU | Notes |
 |---|---|---|
 | Azure Key Vault | Standard | Managed Identity configured, used for production secrets |

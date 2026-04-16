@@ -107,7 +107,7 @@ graph TB
     end
 
     subgraph ClaudeOuter["External AI"]
-        ClaudeAPI["Anthropic Claude API\nGPT-equivalent via Key Vault-secured Function\nSwap-ready for Azure OpenAI\n(ADR-001 through ADR-012)"]
+        ClaudeAPI["Anthropic Claude API\nLLM backbone via Key Vault-secured Function\nSwap-ready for Azure OpenAI\n(ADR-001 through ADR-012)"]
     end
 
     MI -->|"Fetches secrets"| KV
@@ -142,7 +142,7 @@ Each of the 12 pain points maps to a specific container and integration pattern.
 | 3 | Backlog dedup | Service Bus + Functions | ADO webhook to SB topic to Claude API semantic check | [ADR-003](./decisions/ADR-003-backlog-dedup.md) |
 | 4 | Support ticket triage | Service Bus + Functions chain | HelpScout webhook to SB to 3-Function pipeline | [ADR-004](./decisions/ADR-004-support-triage.md) |
 | 5 | QA automation | Claude Code + ADO Pipelines | Slash command reads Gherkin ACs, generates Playwright | [ADR-005](./decisions/ADR-005-qa-automation.md) |
-| 6 | Consultant onboarding | ADO Pipelines + Functions | Post-deploy hook updates CLAUDE.md knowledge base | [ADR-006](./decisions/ADR-006-developer-productivity.md) |
+| 6 | Consultant onboarding | ADO Pipelines + Functions | Post-deploy hook updates CLAUDE.md knowledge base | [ADR-011](./decisions/ADR-011-onboarding-living-docs.md) |
 | 7 | Developer productivity | Claude Code + Key Vault MCP | Slash commands: /create-pr, /update-ticket | [ADR-006](./decisions/ADR-006-developer-productivity.md) |
 | 8 | Payment integrations | Claude Code + CLAUDE.md | Black-box deficiency pattern + NMI reuse | [ADR-012](./decisions/ADR-012-payment-integrations.md) |
 | 9 | Rate page NLP | App Services (new route) | Claude API structured ChangeSet output + human gate | [ADR-007](./decisions/ADR-007-nlp-rate-management.md) |
@@ -154,7 +154,7 @@ Each of the 12 pain points maps to a specific container and integration pattern.
 
 ## Architecture Decision Records
 
-All 12 solutions have a corresponding ADR with explicit trade-off analysis, alternatives considered, and an Azure Migration Path section showing what changes with full Azure AI platform access.
+All 12 solutions have a corresponding ADR with explicit trade-off analysis, alternatives considered, and an Azure Migration Path section showing what changes with full Azure AI platform access. All ADRs were documented in April 2026; the underlying decisions were made over the preceding 18 months of production AI work.
 
 | ADR | Decision | Status |
 |---|---|---|
@@ -208,6 +208,14 @@ Full analysis: [AZURE_ENVIRONMENT_INVENTORY.md](./AZURE_ENVIRONMENT_INVENTORY.md
 | AI development tooling | Claude Code + CLAUDE.md | Repo context, slash commands, Key Vault MCP credential injection |
 | CI/CD | Azure DevOps Pipelines | Multi-target build (net8.0 + net10.0); PAT-authenticated ADO REST |
 | Secrets | Azure Key Vault + Managed Identity | All credentials stored in Key Vault; no secrets in code or pipelines |
+
+---
+
+## External Dependencies and Data Considerations
+
+All 12 AI solutions depend on the Anthropic Claude API as the LLM backbone. Production deployment requires retry logic with backoff for Claude API calls and graceful degradation when the API is unavailable or returns malformed responses. Solutions with existing non-AI fallback paths (ADR-008: form-based reservation flow) degrade naturally; solutions without a non-AI equivalent (ADR-001: documentation pipeline) queue inputs for processing when the API recovers.
+
+Customer-facing AI features that send business data to Anthropic servers (ADR-007: rate management, ADR-008: reservation data, ADR-009: pricing data) require data classification review and Anthropic DPA verification before production deployment. The enterprise vision migration to Azure OpenAI (ENTERPRISE_VISION.md) eliminates third-party data egress entirely by keeping all LLM processing within the Microsoft tenant.
 
 ---
 

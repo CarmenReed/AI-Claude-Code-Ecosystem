@@ -21,7 +21,7 @@ Two separate but related decisions are made here: the .NET modernization approac
 Use Claude Code with full CLAUDE.md codebase context to audit deprecated APIs and generate a module-by-module migration plan. The migration plan covers .NET 8 to .NET 10 in phases, with ADO Pipelines adding multi-target build (`net8.0;net10.0`) to catch regressions per PR. Development proceeds incrementally: no "big bang" migration that freezes the codebase.
 
 **For IaC modernization:**  
-Parameterize the existing ARM template with environment slots (dev/staging/prod App Service plans) using ARM template functions and conditional resource blocks. This is not a Bicep migration. It is a structural improvement to the existing template that provides environment slot support with zero toolchain change and zero deployment risk. The Bicep migration is deferred to after the .NET modernization stabilizes.
+Parameterize the existing ARM template with environment slots (dev/staging/prod App Service plans) using ARM template functions and conditional resource blocks. This is not a Bicep migration. Bicep compiles to ARM JSON, so the deployed infrastructure would be identical, but the migration requires rewriting the template in a new authoring format, validating parity, and retraining the team on the new syntax. The team's IaC investment is better spent on the .NET modernization right now. The Bicep migration is the correct long-term target and is deferred to after the .NET modernization stabilizes.
 
 ---
 
@@ -40,7 +40,7 @@ Parameterize the existing ARM template with environment slots (dev/staging/prod 
 | Option | Pros | Cons |
 |---|---|---|
 | ARM template parameterization (chosen) | Zero toolchain change, zero deployment risk, same deployment model as today | ARM JSON harder to maintain at scale; does not address the long-term Bicep migration need |
-| Full Bicep migration | Azure-native IaC standard, modular, parameterized, easier to maintain | Replaces production-deployed infrastructure; requires full regression testing of all environments; risk during active development |
+| Full Bicep migration | Azure-native IaC standard, modular, parameterized, easier to maintain | Requires rewriting the template in a new authoring format and validating ARM output parity; team investment is better spent on .NET modernization first |
 | No IaC change | Zero risk | Maintenance burden accumulates; environment inconsistencies grow |
 
 ---

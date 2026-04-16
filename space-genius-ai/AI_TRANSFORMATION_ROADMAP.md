@@ -189,7 +189,7 @@ The architecture does not change. The infrastructure upgrades. That is intention
 
 ## Investment and Sequencing Rationale
 
-Phase 0 and Phase 1 have zero net new Azure cost: they use existing provisioned infrastructure.
+Phase 0 and Phase 1 have zero net new Azure infrastructure cost: they use existing provisioned resources. Claude API token consumption is an operational expense tracked separately from Azure resource provisioning.
 
 Phase 2 adds a Service Bus topic (no additional cost tier on the existing namespace) and new Azure Function routes (included in existing App Service plan).
 
@@ -199,4 +199,4 @@ Phase 4 adds one new App Service route and one new Azure Function HTTP trigger: 
 
 Phase 5 is the only phase that requires budget approval for new Azure services.
 
-**The first four phases of a 12-month AI transformation roadmap cost zero in new Azure infrastructure.** That is the architecture argument for approval.
+**The first four phases of a 12-month AI transformation roadmap require zero new Azure infrastructure provisioning.** Claude API token costs are operational, not capital. That is the architecture argument for approval.

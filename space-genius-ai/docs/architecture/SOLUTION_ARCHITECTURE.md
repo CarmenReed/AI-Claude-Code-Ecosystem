@@ -323,7 +323,7 @@ The left column is the credibility story: real constraints, real assets, real ar
 2. ARM template is parameterized with environment slots (dev/staging/prod App Service plans) using ARM template functions
 3. ADO Pipelines adds multi-target build (net8.0 + net10.0) to catch regressions per PR
 
-**Why extend ARM, not migrate to Bicep:** The existing ARM template is production-deployed infrastructure. A principal architect does not replace running infrastructure without a migration plan and business case. The right move is parameterizing the existing template with environment slots and conditional resource blocks: zero downtime, no new toolchain. Bicep migration is a phase-2 goal once the .NET modernization stabilizes.
+**Why extend ARM, not migrate to Bicep:** Bicep compiles to ARM JSON, so the deployed infrastructure would be identical, but the migration requires rewriting the template in a new authoring format and validating output parity. The team's IaC investment is better spent on the .NET modernization right now. Parameterizing the existing template with environment slots and conditional resource blocks delivers immediate value with zero toolchain change. Bicep migration is the correct long-term target once the .NET modernization stabilizes.
 
 **Constraint:** ARM JSON is harder to maintain at scale than Bicep modules. The parameterization approach is a bridge, not a long-term target.
 
