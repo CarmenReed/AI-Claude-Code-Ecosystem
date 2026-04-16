@@ -49,7 +49,9 @@ This keeps the application deployable to GitHub Pages with zero server infrastru
 - No automatic retry or circuit breaker from the SDK
 
 **Accepted tradeoff:**
-The query key (not the admin key) is exposed. Azure AI Search query keys have no ability to modify index data, create indexes, or access other Azure resources. The risk is limited to someone querying the portfolio's search index with the same key, which has no security or financial consequence beyond minor index usage.
+The query key (not the admin key) is exposed in the client bundle. Azure AI Search query keys have no ability to modify index data, create indexes, or access other Azure resources. The risk is limited to someone querying the portfolio's search index with the same key, which has no security or financial consequence beyond minor index usage.
+
+**Note:** The `azureSearchService.js` module also exports admin-key functions (`createJobIndex`, `indexJobs`, `deleteIndex`) used during development and demo setup. In production use, only query-key search operations are called from the browser. The admin-key functions would move to a server-side API route in the Azure Static Web Apps migration (see Azure Migration Path below).
 
 ---
 

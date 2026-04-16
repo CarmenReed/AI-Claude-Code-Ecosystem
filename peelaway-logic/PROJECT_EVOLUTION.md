@@ -61,12 +61,12 @@ The key architectural decisions made at this stage:
 
 Growth happened in three areas: test coverage, search quality, and CI/CD maturity.
 
-**Test coverage.** Starting from zero, the test suite grew to 434 unit and component tests across 17 suites (Jest + React Testing Library), plus 62 E2E tests across 8 spec files (Microsoft Playwright + Chromium). Tests cover layer-level search logic, scoring batch behavior, resume parsing, anti-hallucination constraints, deduplication, and complete user workflows through all four pipeline phases. The anti-hallucination tests explicitly assert that tailored content does not introduce phrases not present in the uploaded resume. All external APIs are mocked at the network layer (Jest mocks for unit tests, Playwright `page.route()` for E2E), so tests are deterministic and free to run.
+**Test coverage.** Starting from zero, the test suite grew to 451 unit and component tests across 18 suites (Jest + React Testing Library), plus 70 E2E tests across 8 spec files (Microsoft Playwright + Chromium). Tests cover layer-level search logic, scoring batch behavior, resume parsing, anti-hallucination constraints, deduplication, and complete user workflows through all four pipeline phases. The anti-hallucination tests explicitly assert that tailored content does not introduce phrases not present in the uploaded resume. All external APIs are mocked at the network layer (Jest mocks for unit tests, Playwright `page.route()` for E2E), so tests are deterministic and free to run.
 
 **Search layer performance.** Early versions returned uncapped results: Layer 2 RSS alone could return 350 items across 7 feeds. Scoring 100+ jobs at 8 per batch with 15-second delays produced 3 to 10 minutes of waiting per search. The fix was a per-layer cap of 10 results post-dedup, producing a maximum of ~30 job descriptions per session. Scoring time dropped from 3 to 10 minutes to approximately 45 seconds. API cost per search dropped approximately 40%.
 
 **CI/CD maturity.** Four GitHub Actions workflows now run on push to main:
-- Test runner (Jest: 453 tests must pass; Playwright: 62 E2E tests against Chromium)
+- Test runner (Jest: 451 tests must pass; Playwright: 70 E2E tests against Chromium)
 - Doc quality (doc-lint.js checks em-dash violations, broken internal links, stale version numbers)
 - Env audit (blocks pushes containing QA references in production docs)
 - Deploy (build and push to GitHub Pages)

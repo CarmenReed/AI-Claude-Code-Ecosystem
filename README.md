@@ -67,7 +67,7 @@ AI-Claude-Code-Ecosystem/
 ## Technology Stack
 
 ### PeelAway Logic
-React (Create React App), Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), Azure Bicep (IaC template), GitHub Pages, Jest (453 tests, 16 suites), Microsoft Playwright (62 E2E tests), GitHub Actions CI/CD, GitHub Copilot, Claude Code
+React (Create React App), Anthropic Claude API, Azure AI Search (F0 free tier), Semantic Kernel (Python demo), Azure Bicep (IaC template), GitHub Pages, Jest (451 tests, 18 suites), Microsoft Playwright (70 E2E tests), GitHub Actions CI/CD, GitHub Copilot, Claude Code
 
 ### SpaceGenius (Production)
 C# / .NET, ASP.NET Web API, React, SQL Server / SQL Managed Instance, Azure Functions, Azure App Services, Azure Service Bus, Azure Key Vault, Managed Identity, Azure DevOps Pipelines, Azure CI/CD, ARM templates, Claude Code, GitHub Copilot

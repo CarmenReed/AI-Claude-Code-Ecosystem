@@ -27,6 +27,10 @@ graph TB
         AzureSearch["Azure AI Search\nF0 free tier\nSemantic resume and JD similarity"]
     end
 
+    subgraph Cloud_Storage["Cloud Storage"]
+        DropboxAPI["Dropbox API\nOAuth 2.0 cloud sync\nResume import, document export"]
+    end
+
     subgraph Hosting["Hosting"]
         GHPages["GitHub Pages\nStatic React application"]
         GHActions["GitHub Actions\nCI/CD: test, lint, deploy"]
@@ -41,6 +45,7 @@ graph TB
     PeelAway -->|"Prompt for company-direct listings"| ATS
     PeelAway -->|"Scoring and tailoring prompts"| Claude
     PeelAway -->|"Semantic search queries"| AzureSearch
+    PeelAway -->|"Sync state, import/export docs"| DropboxAPI
     PeelAway -.->|"Deployed to"| GHPages
     GHActions -.->|"Builds and deploys"| GHPages
 ```
@@ -58,6 +63,7 @@ graph TB
         Review["Review Phase\nTiered results (Strong/Possible/Weak/Rejected)\nSort by score, date, company\nHuman Gate: explicit job selection"]
         Complete["Complete Phase\nResume + cover letter generation per job\nAnti-hallucination constraints\nDownload, copy, mark as applied"]
         Storage["localStorage\nPipeline state, applied jobs,\ndismissed jobs, search config"]
+        CloudSync["cloudStorage.js + cloudSync.js\nDropbox OAuth 2.0 cloud sync\nResume import, document export\nADR-007"]
         AzureSearchClient["azureSearchService.js\nREST client for Azure AI Search\nNo SDK dependency"]
     end
 
@@ -65,11 +71,14 @@ graph TB
         ClaudeAPI["Anthropic Claude API\nHaiku: scoring\nSonnet: tailoring"]
         AzureSearchService["Azure AI Search\nF0 free tier"]
         JobAPIs["Job APIs\nAdzuna, JSearch, RSS"]
+        Dropbox["Dropbox API\nOAuth 2.0 implicit flow\nCloud sync + file storage"]
     end
 
     Scout --> Review
     Review --> Complete
     Complete --> Storage
+    Storage <-->|"Sync"| CloudSync
+    CloudSync -->|"OAuth + REST"| Dropbox
     Scout -->|"Reads applied/dismissed"| Storage
     Scout --> AzureSearchClient
     Scout -->|"Scoring prompts"| ClaudeAPI
@@ -154,15 +163,15 @@ timeline
               : Structured output contracts between phases
               : localStorage persistence with dedup
     section March 2026
-        Growth : 434 unit/component tests across 17 suites (Jest + RTL)
-               : 62 E2E tests across 8 specs (Microsoft Playwright + Chromium)
+        Growth : 451 unit/component tests across 18 suites (Jest + RTL)
+               : 70 E2E tests across 8 specs (Microsoft Playwright + Chromium)
                : CI/CD via GitHub Actions (4 workflows)
                : Anti-hallucination tests as first-class coverage
                : Doc-lint and env-audit quality enforcement
     section April 2026
         Azure Integration : Azure AI Search (F0, REST client)
                           : Semantic Kernel Python demo
-                          : 6 Architecture Decision Records
+                          : 7 Architecture Decision Records
                           : Bicep IaC documentation template
                           : Search layer caps: 10/layer, ~30 max, ~45s scoring
 ```
@@ -171,7 +180,7 @@ timeline
 
 ## Architecture Decisions
 
-All architectural decisions are documented as ADRs in [decisions/](./decisions/).
+All architectural decisions are documented as ADRs in [decisions/](./decisions/). All ADRs were documented in April 2026; the underlying decisions were made during the February through April 2026 development period.
 
 | ADR | Decision | Status |
 |---|---|---|
@@ -181,6 +190,7 @@ All architectural decisions are documented as ADRs in [decisions/](./decisions/)
 | [ADR-004](./decisions/ADR-004-project-evolution-strategy.md) | Refactor from Gemini Gems to agentic architecture | Accepted |
 | [ADR-005](./decisions/ADR-005-github-pages-hosting.md) | GitHub Pages over Azure Static Web Apps | Accepted |
 | [ADR-006](./decisions/ADR-006-anti-hallucination-strategy.md) | Black-box deficiency prompt engineering strategy | Accepted |
+| [ADR-007](./decisions/ADR-007-dropbox-cloud-sync.md) | Dropbox OAuth cloud sync over localStorage-only persistence | Accepted |
 
 ---
 

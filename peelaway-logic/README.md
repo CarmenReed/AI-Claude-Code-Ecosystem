@@ -5,7 +5,7 @@
 **Live Site:** https://carmenreed.github.io/PeelAway-Logic  
 **Stack:** React (Create React App), Anthropic Claude API, Azure AI Search, Microsoft Playwright, Semantic Kernel (Python demo)  
 **Dev Tools:** Claude Code (implementation), GitHub Copilot (inline questions), Claude Cowork (planning)  
-**Test Coverage:** 434 unit/component tests across 17 suites (Jest + RTL), 62 E2E tests across 8 specs (Microsoft Playwright), CI/CD via GitHub Actions
+**Test Coverage:** 451 unit/component tests across 18 suites (Jest + RTL), 70 E2E tests across 8 specs (Microsoft Playwright), CI/CD via GitHub Actions
 
 ---
 
@@ -64,7 +64,8 @@ Complete Phase
 | [ADR-004](./docs/architecture/decisions/ADR-004-project-evolution-strategy.md) | Why refactor from Gemini Gems to agentic architecture |
 | [ADR-005](./docs/architecture/decisions/ADR-005-github-pages-hosting.md) | Why GitHub Pages over Azure Static Web Apps |
 | [ADR-006](./docs/architecture/decisions/ADR-006-anti-hallucination-strategy.md) | Anti-hallucination prompt engineering strategy |
-| [azure-resources.bicep](./docs/architecture/azure-resources.bicep) | IaC documentation for enterprise Azure deployment |
+| [ADR-007](./docs/architecture/decisions/ADR-007-dropbox-cloud-sync.md) | Dropbox OAuth cloud sync over localStorage-only persistence |
+| [azure-resources.bicep](./docs/architecture/azure-resources.bicep) | IaC-ready template for enterprise Azure deployment |
 | [GOVERNANCE.md](./docs/GOVERNANCE.md) | Documentation standards, HCI governance, CI quality enforcement |
 
 ---
@@ -95,8 +96,8 @@ See [azure-resources.bicep](./docs/architecture/azure-resources.bicep) for the f
 
 | Metric | Value |
 |---|---|
-| Unit/component tests | 434 tests across 17 suites (Jest + React Testing Library) |
-| E2E tests | 62 tests across 8 specs (Microsoft Playwright + Chromium) |
+| Unit/component tests | 451 tests across 18 suites (Jest + React Testing Library) |
+| E2E tests | 70 tests across 8 specs (Microsoft Playwright + Chromium) |
 | Anti-hallucination rate | 0% fabrication on resume tailoring (architecturally enforced) |
 | Search performance | ~30 max results per session, ~45 second scoring time |
 | API cost per session | ~$0.60 to $0.90 after layer caps (down from ~$1.00 to $1.55) |

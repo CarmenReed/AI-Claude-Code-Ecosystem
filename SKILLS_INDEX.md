@@ -22,7 +22,7 @@
 | Skill | Production Evidence | Azure Path |
 |---|---|---|
 | Azure AI Search integration | PeelAway Logic: REST client against F0 free tier, resume + JD semantic similarity | Full SDK with DefaultAzureCredential + Managed Identity |
-| Microsoft Playwright E2E testing | PeelAway Logic: 62 E2E tests across 7 specs, network-level API mocking via page.route(), CI/CD integration with Chromium | Azure DevOps Pipelines with Playwright Test |
+| Microsoft Playwright E2E testing | PeelAway Logic: 70 E2E tests across 8 specs, network-level API mocking via page.route(), CI/CD integration with Chromium | Azure DevOps Pipelines with Playwright Test |
 | Semantic Kernel orchestration | PeelAway SK Python demo: pipeline phases as SK plugins, swap-ready for Azure OpenAI | Production SK with Azure OpenAI, Managed Identity, function calling |
 | Azure Functions event-driven AI | SpaceGenius: HTTP-triggered functions as Claude API proxy, timer-triggered pricing intelligence | Logic Apps native connectors + Azure OpenAI |
 | Service Bus event chaining | SpaceGenius: ADO webhook to Service Bus topic to chained Function subscribers | Full Logic Apps workflow with run history audit |
@@ -50,7 +50,7 @@
 
 | Skill | Production Evidence | Azure Path |
 |---|---|---|
-| AI-generated test suites | PeelAway: 453 unit/component tests (16 suites, Jest) + 62 E2E tests (7 specs, Playwright); SpaceGenius: Claude Code /generate-tests slash command from Gherkin ACs | Copilot Workspace PBI-to-PR loop |
+| AI-generated test suites | PeelAway: 451 unit/component tests (18 suites, Jest) + 70 E2E tests (8 specs, Playwright); SpaceGenius: Claude Code /generate-tests slash command from Gherkin ACs | Copilot Workspace PBI-to-PR loop |
 | Automated PR descriptions | SpaceGenius: /create-pr slash command from git diff + ADO ticket link | Copilot Enterprise whole-repo context |
 | Requirements ingestion pipeline | SpaceGenius doc pipeline: raw meeting notes to BRD/FRD/LOE/Gherkin ACs via Claude API | Azure AI Foundry prompt flow + ADO native connector |
 | Velocity-grounded estimation | SpaceGenius: ADO Analytics OData feed + Claude API generates granular estimate with confidence range | Azure OpenAI fine-tuned on team velocity data |
