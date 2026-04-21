@@ -67,7 +67,7 @@ The existing Service Bus namespace supports additional topics and subscriptions 
 
 ADO Pipelines is already running CI/CD for all environments. The PAT authentication enables REST API calls to ADO from any service that holds the token (Functions, Claude Code sessions via Key Vault MCP).
 
-**Capabilities unlocked by PAT + ADO REST:**
+**Capabilities enabled by PAT + ADO REST:**
 - PBI creation and update (documentation pipeline, estimation output)
 - Work item linking (dedup flagging, ticket relationships)
 - Pipeline trigger (QA test run initiation)
@@ -89,7 +89,7 @@ When executive sponsorship approves new Azure resources, the acquisition priorit
 
 | Priority | Resource | Justification |
 |---|---|---|
-| 1 | Azure OpenAI (GPT-4o) | Eliminates third-party data egress, enables Managed Identity auth on all LLM calls, unlocks AI Foundry evaluation |
+| 1 | Azure OpenAI (GPT-4o) | Eliminates third-party data egress, enables Managed Identity auth on all LLM calls, enables AI Foundry evaluation |
 | 2 | GitHub Copilot Enterprise | Eliminates the CLAUDE.md maintenance burden, gives all 10+ developers whole-repo AI context |
 | 3 | Azure AI Search | Enables persistent vector index for backlog dedup (removes 90-day scope limitation) and living docs (removes unstructured markdown search limitation) |
 | 4 | Logic Apps | Replaces chained Functions with visual workflow orchestration and native ADO + HelpScout connectors |

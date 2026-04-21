@@ -112,7 +112,7 @@ The 1.5-year arc from ad-hoc developer experimentation to 12 documented producti
 
 **Lesson 4: Constraint-first architecture produces more honest documentation.** Every ADR in this portfolio acknowledges what the constrained solution cannot do. Those constraints are not embarrassing. They are the most useful parts of the documents. A reader who sees the constraint and the workaround understands both the decision and its upgrade path. A reader who sees only the solution understands neither the trade-off nor what changes at enterprise scale.
 
-**Lesson 5: The gap between what is provisioned and what Azure AI provides is the business case, not a failure.** The 12 constrained solutions work. They are in production or production-ready. They produce real value within real constraints. The enterprise vision documents show exactly what Azure OpenAI, AI Foundry, Logic Apps, and Copilot Enterprise unlock. The gap between the two columns is the budget request. The constrained solutions prove the concept while making the investment case.
+**Lesson 5: The gap between what is provisioned and what Azure AI provides is the business case, not a failure.** The 12 constrained solutions work. They are in production or production-ready. They produce real value within real constraints. The enterprise vision documents show exactly what Azure OpenAI, AI Foundry, Logic Apps, and Copilot Enterprise provide. The gap between the two columns is the budget request. The constrained solutions prove the concept while making the investment case.
 
 ---
 
@@ -120,7 +120,7 @@ The 1.5-year arc from ad-hoc developer experimentation to 12 documented producti
 
 The SpaceGenius AI initiative does not end at Phase 4. Phase 5 is when the architecture becomes what it should be. [ENTERPRISE_VISION.md](./architecture/ENTERPRISE_VISION.md) documents that target state in full.
 
-The migration sequence is intentional: Azure OpenAI and GitHub Copilot Enterprise first, because they provide disproportionate value and unblock every subsequent service. Then AI Foundry, AI Search, Logic Apps, Copilot Studio, and Fabric in sequence, each unlocking a documented upgrade path from the constrained solution already running.
+The migration sequence is intentional: Azure OpenAI and GitHub Copilot Enterprise first, because they provide disproportionate value and unblock every subsequent service. Then AI Foundry, AI Search, Logic Apps, Copilot Studio, and Fabric in sequence, each enabling a documented upgrade path from the constrained solution already running.
 
 The architecture does not change when the infrastructure upgrades. Human gates, structured output contracts, Key Vault + Managed Identity, test coverage, documentation quality gates: these are architecture decisions, not implementation choices. They scale to the enterprise target state unchanged.
 

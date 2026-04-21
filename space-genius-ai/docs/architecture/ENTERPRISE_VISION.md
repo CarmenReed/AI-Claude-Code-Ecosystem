@@ -121,10 +121,10 @@ Copilot Workspace turns ADO PBI into a plan, into code, into a PR with a single 
 
 When budget approval arrives, the migration sequence prioritizes value and architectural cohesion:
 
-| Step | Action | Unlocks |
+| Step | Action | Enables |
 |---|---|---|
 | 1 | Provision Azure OpenAI + GPT-4o deployments | All LLM calls go Azure-native; Managed Identity auth; data residency; AI Foundry eval |
-| 2 | Provision GitHub Copilot Enterprise | All developers have repo context; CLAUDE.md maintenance ends; Copilot Workspace unlocked |
+| 2 | Provision GitHub Copilot Enterprise | All developers have repo context; CLAUDE.md maintenance ends; Copilot Workspace becomes available |
 | 3 | Provision Azure AI Foundry | Org-wide prompt flows; documentation pipeline on shared infrastructure; eval metrics |
 | 4 | Provision Azure AI Search | Vector index; backlog dedup without scope limit; living docs RAG; support dedup |
 | 5 | Provision Logic Apps | Replace chained Functions for doc pipeline and support triage; visual designer for Kathy |

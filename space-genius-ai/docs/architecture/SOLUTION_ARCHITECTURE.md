@@ -8,7 +8,7 @@
 
 ## Reading This Document
 
-The left column is the credibility story: real constraints, real assets, real architectural decisions with explicit WHYs for every non-Azure fallback. The right column is the vision story. Every constraint in the left column is an implicit pitch for what Microsoft tooling unlocks. The gap between the two columns is the opportunity.
+The left column is the credibility story: real constraints, real assets, real architectural decisions with explicit WHYs for every non-Azure fallback. The right column is the vision story. Every constraint in the left column is an implicit pitch for what Microsoft tooling would replace. The gap between the two columns is the opportunity.
 
 ---
 
@@ -190,7 +190,7 @@ The left column is the credibility story: real constraints, real assets, real ar
 3. `/update-ticket` posts structured development testing notes back to the PBI
 4. CLAUDE.md provides full codebase context without requiring Copilot Enterprise
 
-**Why Claude Code + custom MCP, not Copilot Workspace:** No Copilot Enterprise license. The Key Vault MCP Server is Carmen's own production implementation. Extending it with ADO-specific slash commands leverages existing architecture. Claude Code reads the full codebase via CLAUDE.md. Slash commands are authored once and shared across the team.
+**Why Claude Code + custom MCP, not Copilot Workspace:** No Copilot Enterprise license. The Key Vault MCP Server is Carmen's own production implementation. Extending it with ADO-specific slash commands reuses existing architecture. Claude Code reads the full codebase via CLAUDE.md. Slash commands are authored once and shared across the team.
 
 **Constraint:** CLAUDE.md requires maintenance. Slash commands require Carmen's authoring and each developer's Claude Code configuration.
 
